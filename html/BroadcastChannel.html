@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>BroadcastChannel</title>
+    <script src="../js/BroadcastChannel.js"></script>
+
+    <script type="module">
+      const record = document.getElementById("record");
+
+      const channel = createChannel("my-channel", null, record);
+
+      const h4 = document.querySelector("h4");
+      h4.textContent = h4.textContent + ": " + channel.id;
+
+      const total = document.getElementById("total");
+      total.onchange = () => {
+        if (total.value < 1) total.value = 1;
+        if (total.value > 10) total.value = 10;
+      };
+
+      const button = document.querySelector("button");
+      button.onclick = () => handleClick();
+
+      function handleClick() {
+        if (total.value > channel.listeners.size + 1) {
+          const href = window.location.href;
+
+          const number = total.value - channel.listeners.size - 1;
+
+          for (let i = 0; i < number; i++) {
+            openNewWindow(href);
+          }
+        } else {
+          const input = document.getElementById("content");
+          const value = input.value;
+          sendMsg(value, channel);
+        }
+      }
+
+      function openNewWindow(href) {
+        const a = document.createElement("a");
+        a.href = href;
+        a.target = "_blank";
+        a.click();
+      }
+    </script>
+    <style>
+      #record {
+        width: 300px;
+        min-height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>BroadcastChannel</h2>
+    <h3>An example of tab page communication using BroadcastChannel</h3>
+    <h4>The channel id of the current page is</h4>
+
+    <input type="number" id="total" min="1" max="10" value="1" />
+    <label for="total">
+      Enter a total number of tabs and you can open that number of tabs
+    </label>
+
+    <br />
+    <input type="text" id="content" />
+    <button>Send | Open</button>
+    <div id="record"></div>
+  </body>
+</html>
