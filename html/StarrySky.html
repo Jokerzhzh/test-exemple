@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>StarrySky</title>
+    <script type="module">
+      const body = document.body;
+
+      const bodyStyle = getComputedStyle(body);
+
+      const { width } = bodyStyle;
+
+      const widthnum = width.slice(0, -2);
+
+      const count = widthnum / 5;
+
+      for (let i = 0; i < count; i++) {
+        const stars = document.createElement("div");
+        stars.classList.add("stars");
+
+        const { delay, color } = random();
+        stars.style.setProperty("--delay", delay);
+        stars.style.setProperty("--color", color);
+
+        body.appendChild(stars);
+      }
+
+      function random() {
+        const delay = Math.random() * 2 + "s";
+        const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        return { delay, color };
+      }
+    </script>
+    <style>
+      html {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0 auto;
+        background: #000;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .stars {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: var(--color);
+        animation: up 2s ease-in infinite;
+        animation-delay: var(--delay);
+        box-shadow: 0 0 20px 2px var(--color);
+        opacity: 0.8;
+      }
+      @keyframes up {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(0, 100vh);
+        }
+      }
+    </style>
+  </head>
+  <body></body>
+</html>

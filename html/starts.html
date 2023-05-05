@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>stars</title>
+
+    <script type="module">
+      const body = document.body;
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const width = (canvas.width = document.body.width);
+      const height = (canvas.height = document.body.height);
+
+      const stars = [];
+      const maxStars = 1000;
+
+      for (let i = 0; i < maxStars; i++) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 1.2,
+          vx: Math.floor(Math.random() * 10) - 5,
+          vy: Math.floor(Math.random() * 10) - 5,
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < maxStars; i++) {
+          const star = stars[i];
+
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          ctx.fill();
+
+          star.x += star.vx;
+          star.y += star.vy;
+
+          if (star.x < 0 || star.x > width) {
+            star.vx = -star.vx;
+          }
+
+          if (star.y < 0 || star.y > height) {
+            star.vy = -star.vy;
+          }
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    </script>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0 auto;
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+</html>
