@@ -14,15 +14,30 @@
 
       const count = widthnum / 5;
 
+      let total = 0;
+
       for (let i = 0; i < count; i++) {
         const stars = document.createElement("div");
         stars.classList.add("stars");
+
+        const rWdith = rwidth();
+        stars.style.setProperty("--rWdith", rWdith + "px");
+        total += rWdith;
+
+        if (total > widthnum) {
+          break;
+        }
 
         const { delay, color } = random();
         stars.style.setProperty("--delay", delay);
         stars.style.setProperty("--color", color);
 
         body.appendChild(stars);
+      }
+
+      function rwidth() {
+        const width = Math.random() * 10;
+        return width;
       }
 
       function random() {
@@ -47,13 +62,15 @@
         align-items: flex-start;
       }
       .stars {
-        width: 5px;
-        height: 5px;
+        /* width: 5px;
+        height: 5px; */
+        width: var(--rWdith);
+        height: var(--rWdith);
         border-radius: 50%;
         background-color: var(--color);
         animation: up 2s ease-in infinite;
         animation-delay: var(--delay);
-        box-shadow: 0 0 20px 2px var(--color);
+        box-shadow: 0 -10px 20px 2px var(--color);
         opacity: 0.8;
       }
       @keyframes up {
