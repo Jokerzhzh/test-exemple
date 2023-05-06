@@ -20,30 +20,27 @@
         const stars = document.createElement("div");
         stars.classList.add("stars");
 
-        const rWdith = rwidth();
-        stars.style.setProperty("--rWdith", rWdith + "px");
-        total += rWdith;
+        const { width, delay, color } = random();
+        stars.style.setProperty("--width", width + "px");
+        stars.style.setProperty("--bottom", width / 2 + "px");
+        stars.style.setProperty("--height", width * 10 + "px");
+        stars.style.setProperty("--delay", delay);
+        stars.style.setProperty("--color", color);
+        body.appendChild(stars);
+
+        total += width * 3;
 
         if (total > widthnum) {
           break;
         }
-
-        const { delay, color } = random();
-        stars.style.setProperty("--delay", delay);
-        stars.style.setProperty("--color", color);
-
-        body.appendChild(stars);
-      }
-
-      function rwidth() {
-        const width = Math.random() * 10;
-        return width;
       }
 
       function random() {
-        const delay = Math.random() * 2 + "s";
+        const width = Math.random() * 10;
+        const delay = Math.random() * 5 + "s";
         const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        return { delay, color };
+
+        return { width, delay, color };
       }
     </script>
     <style>
@@ -53,7 +50,7 @@
         overflow: hidden;
       }
       body {
-        width: 100vw;
+        width: 150vw;
         height: 100vh;
         margin: 0 auto;
         background: #000;
@@ -64,21 +61,37 @@
       .stars {
         /* width: 5px;
         height: 5px; */
-        width: var(--rWdith);
-        height: var(--rWdith);
+        width: var(--width);
+        height: var(--width);
         border-radius: 50%;
         background-color: var(--color);
-        animation: up 2s ease-in infinite;
+        animation: up 4s ease-in infinite;
         animation-delay: var(--delay);
-        box-shadow: 0 -10px 20px 2px var(--color);
-        opacity: 0.8;
+        /* box-shadow: 0 -10px 20px 2px var(--color); */
+        /* opacity: 0.8; */
+        position: relative;
+      }
+      .stars::after {
+        content: "";
+        position: absolute;
+        width: var(--width);
+        height: var(--height);
+        background: linear-gradient(
+          to top,
+          var(--color) 0%,
+          rgba(0, 0, 0, 0.1) 80%
+        );
+        left: 0;
+        bottom: var(--bottom);
+        transform: rotate(50deg);
+        transform-origin: bottom center;
       }
       @keyframes up {
         from {
-          transform: translate(0, 0);
+          transform: translate(10vw, 0);
         }
         to {
-          transform: translate(0, 100vh);
+          transform: translate(-50vw, 100vh);
         }
       }
     </style>
