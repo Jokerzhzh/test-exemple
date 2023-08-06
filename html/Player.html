@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Player</title>
+  </head>
+  <body>
+    <button id="start">start</button>
+    <button id="pause">pause</button>
+    <button id="stop">stop</button>
+    <span id="time">time</span>
+  </body>
+  <script type="module">
+    import { Player } from "./../js/Player.js";
+
+    const player = new Player();
+
+    const playerProxy = new Proxy(player, {
+      set(target, key, value) {
+        target[key] = value;
+        updateTime();
+        return true;
+      },
+    });
+
+    const start = document.getElementById("start");
+    function startPlayer() {
+      playerProxy.start();
+    }
+    start.addEventListener("click", startPlayer);
+
+    const pause = document.getElementById("pause");
+    function pausePlayer() {
+      playerProxy.pause();
+    }
+    pause.addEventListener("click", pausePlayer);
+
+    const stop = document.getElementById("stop");
+    function stopPlayer() {
+      playerProxy.stop();
+    }
+    stop.addEventListener("click", stopPlayer);
+
+    const time = document.getElementById("time");
+    function updateTime() {
+      time.innerHTML = playerProxy.time;
+    }
+  </script>
+</html>
