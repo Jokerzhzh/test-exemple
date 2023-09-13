@@ -51,23 +51,15 @@ class PolylineEditor {
     this.parentEl = dom;
 
     this.#pixel = {
-      x: this.#findmin(points.map((_) => _.x)) - this.#extra,
-      y: this.#findmin(points.map((_) => _.y)) - this.#extra,
+      x: this.#findmin(points.map((_) => _.x)),
+      y: this.#findmin(points.map((_) => _.y)),
     };
 
     this.points = points.map((_) => ({
       ..._,
-      x: _.x - this.#pixel.x,
+      x: _.x - this.#pixel.x + this.#extra,
       y: _.y - this.#pixel.y + this.#extra,
     }));
-
-    this.#pixel = {
-      x: this.#findmin(this.points.map((_) => _.x)),
-      y: this.#findmin(this.points.map((_) => _.y)),
-    };
-
-    // this.width = this.#maxdiff(this.points.map((_) => _.x)) + this.#extra * 2;
-    // this.height = this.#maxdiff(this.points.map((_) => _.y)) + this.#extra * 2;
 
     this.width = dom.clientWidth;
     this.height = dom.clientHeight;
