@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:ws": "node --env-file=config.env ./node/websocket.mjs"
+    "dev:ws": "node --env-file=config.env ./node/Websocket.mjs"
   },
   "dependencies": {
     "ws": "^8.14.1"

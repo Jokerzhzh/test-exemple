@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webscoket</title>
+  </head>
+  <script type="module" src="../js/Websocket.js"></script>
+  <style>
+    .serverStatus {
+      margin: 14px 0;
+      font-size: 24px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+    }
+    .content {
+      width: 260px;
+    }
+    .status {
+      width: 90px;
+      font-weight: 500;
+    }
+    #Opened {
+      color: green;
+    }
+    #Closed {
+      color: red;
+      display: none;
+    }
+    .button {
+      margin: 0 10px;
+      height: 21px;
+      width: 47px;
+    }
+    .input {
+      margin: 14px 0;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <h1 class="title">Websocket</h1>
+      <div class="serverStatus">
+        <div class="content">
+          serverStatus:
+          <span id="Opened" class="status">Opened</span>
+          <span id="Closed" class="status">Closed</span>
+        </div>
+        <button class="button" id="Open">Open</button>
+        <button class="button" id="Close">Close</button>
+      </div>
+      <div class="input">
+        <input type="text" id="Text" />
+        <button class="button" id="Send">Send</button>
+        <button class="button" id="CloseWs">Close</button>
+        <button class="button" id="RetryWs">Retry</button>
+      </div>
+
+      <div id="log"></div>
+    </div>
+  </body>
+</html>
