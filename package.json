@@ -4,8 +4,13 @@
   "description": "This is a repository I use to write examples about the web.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:ws": "node --env-file=config.env ./node/websocket.mjs"
   },
+  "dependencies": {
+    "ws": "^8.14.1"
+  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MrZhuA00/test-exemple.git"
