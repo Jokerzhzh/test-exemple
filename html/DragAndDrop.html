@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DragAndDrop</title>
+    <style>
+      html,
+      body {
+        margin: 0 auto;
+        overflow: hidden;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        padding: 10px;
+      }
+
+      .BoxStyle {
+        width: calc(100% - 30px);
+        height: 200px;
+        border: 2px solid;
+        margin: 10px 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 5px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .child {
+        width: 100px;
+        height: 100px;
+        background-color: #d77ad5;
+        color: white;
+        text-align: center;
+        line-height: 100px;
+        user-select: none;
+      }
+
+      .parent {
+        border-color: #52965a;
+      }
+      .parent2 {
+        border-color: #ff0000;
+      }
+      .box {
+        border-color: #0000ff;
+      }
+    </style>
+    <script type="module">
+      import convert from "./../js/convertNum.js";
+
+      // 获取parent和child
+      const parent = document.querySelector(".parent");
+      const parent2 = document.querySelector(".parent2");
+      const box = document.querySelector(".box");
+      // const childs = Array.from(document.querySelectorAll(".child"));
+      const childs = [];
+
+      let count = 5;
+
+      for (let i = 1; i <= count; i++) {
+        const child = document.createElement("div");
+        child.className = "child";
+        child.id = convert(i);
+        child.draggable = true;
+        child.innerText = convert(i);
+        child.setAttribute("data-id", convert(i));
+        box.appendChild(child);
+        childs.push(child);
+      }
+
+      childs.forEach((child) => {
+        child.ondragstart = (event) => {
+          // console.log(child, 'ondragstart开始拖动了')
+          // dataTransfer.setData 传输数据 key value
+          event.dataTransfer.setData("id", child.id);
+        };
+        child.ondrag = () => {
+          // console.log(child, 'ondrap正在拖动')
+        };
+        child.ondragend = () => {
+          // console.log(child, 'ondragend拖动结束')
+        };
+      });
+
+      // 放置事件 --放置元素 parent
+      // 进入到放置元素
+      parent.ondragenter = () => {
+        // console.log('ondragenter进入到放置元素')
+      };
+      // 在放置元素内移动
+      parent.ondragover = () => {
+        // console.log('ondragover正在放置元素内移动')
+        // 将放置元素设置为可放置
+        event.preventDefault();
+      };
+      // 将拖动元素放置到放置元素
+      parent.ondrop = function (event) {
+        // console.log(parent, 'ondrop放置')
+        //获取拖动元素传输得数据getData(key)
+        const id = event.dataTransfer.getData("id");
+        this.appendChild(document.querySelector("#" + id));
+        // 阻止事件冒泡
+        event.stopPropagation();
+      };
+
+      parent2.ondrop = function (event) {
+        //获取拖动元素传输得数据getData(key)
+        // console.log(event.dataTransfer.getData('id'),'事件对象');
+        const id = event.dataTransfer.getData("id");
+        this.appendChild(document.querySelector("#" + id));
+        // 阻止事件冒泡
+        event.stopPropagation();
+      };
+
+      // 将拖动元素放置到body
+      document.body.ondragover = function () {
+        // console.log('ondragover正在放置元素内移动')
+        // 将放置元素设置为可放置
+        event.preventDefault();
+      };
+
+      // 将拖动元素放置到放置元素
+      document.body.ondrop = (event) => {
+        //获取拖动元素传输得数据getData(key)
+        // console.log(event.dataTransfer.getData('id'),'事件对象');
+        const id = event.dataTransfer.getData("id");
+        box.appendChild(document.querySelector("#" + id));
+        // 阻止事件冒泡
+        event.stopPropagation();
+      };
+
+      box.ondrop = function (event) {
+        //获取拖动元素传输得数据getData(key)
+        // console.log(event.dataTransfer.getData('id'),'事件对象');
+        const id = event.dataTransfer.getData("id");
+        this.appendChild(document.querySelector("#" + id));
+        // 阻止事件冒泡
+        event.stopPropagation();
+      };
+    </script>
+  </head>
+
+  <body>
+    <!-- 放置元素:parent  放置事件:dragenter dragover drop-->
+    <!-- 拖动元素:child 拖动事件：dragstart drag dragend-->
+    <div class="BoxStyle parent"></div>
+    <!-- 设置当前元素可拖拽 draggable设置当前元素是否可拖拽 -->
+    <div class="BoxStyle box"></div>
+
+    <div class="BoxStyle parent2"></div>
+  </body>
+</html>
