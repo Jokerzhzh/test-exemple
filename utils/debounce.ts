@@ -16,11 +16,11 @@
  *   }
  * }, 100);
  */
-function debounce(
-  func: (...args: any[]) => void,
+function debounce<A extends any[], R>(
+  func: (...args: A) => R,
   delay = 1000,
   immediate = false
-) {
+): (...args: A) => void {
   /**
    * timer
    */

@@ -11,7 +11,10 @@
  *   t();
  * }, 100);
  */
-function throttle(func: (...args: any[]) => void, delay: number = 1000) {
+function throttle<A extends any[], R>(
+  func: (...args: A) => R,
+  delay: number = 1000
+): (...args: A) => void {
   /**
    * previous time
    */
